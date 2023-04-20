@@ -15,6 +15,7 @@
  */
 package org.springframework.social.vkontakte.security;
 
+import com.vk.api.sdk.client.Lang;
 import org.springframework.social.security.provider.OAuth2AuthenticationService;
 import org.springframework.social.vkontakte.api.VKontakte;
 import org.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
@@ -26,7 +27,7 @@ import org.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
  */
 public class VKontakteAuthenticationService extends OAuth2AuthenticationService<VKontakte> {
 
-    public VKontakteAuthenticationService(String apiKey, String appSecret) {
-        super(new VKontakteConnectionFactory(apiKey, appSecret));
+    public VKontakteAuthenticationService(String apiKey, String appSecret, Lang lang) {
+        super(new VKontakteConnectionFactory(apiKey, appSecret, lang));
     }
 }
