@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 group = 'org.springframework.social'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -11,7 +11,7 @@ repositories {
 
 ext {
     springSocialVersion = '1.1.6.RELEASE'
-    vkSdkVersion = '0.4.1'
+    vkSdkVersion = '1.0.14'
     servletApiVersion = '3.1.0'
 }
 
