@@ -45,6 +45,7 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
     private final String accessToken;
     private final Integer clientId;
     private final String clientSecret;
+    private final Lang lang;
 
     public VKontakteTemplate() {
         this.providerUserId = null;
@@ -52,6 +53,7 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
         this.clientId = null;
         this.clientSecret = null;
         this.email = null;
+        this.lang = Lang.EN;
         initialize();
     }
 
@@ -59,13 +61,15 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
                              String email,
                              String accessToken,
                              Integer clientId,
-                             String clientSecret) {
+                             String clientSecret,
+                             Lang lang) {
         super(accessToken);
         this.providerUserId = providerUserId;
         this.email = email;
         this.accessToken = accessToken;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.lang = lang;
         initialize();
     }
 
@@ -96,7 +100,7 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
             return vkApiClient.users()
                               .get(userActor)
                               .fields(Fields.values())
-                              .lang(Lang.EN)
+                              .lang(lang)
                               .execute()
                               .get(0);
         } catch (Exception e) {

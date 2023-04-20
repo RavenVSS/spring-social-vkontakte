@@ -22,7 +22,6 @@ import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.users.Fields;
 import com.vk.api.sdk.objects.users.UserFull;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.social.connect.ApiAdapter;
@@ -33,6 +32,7 @@ import org.springframework.social.vkontakte.api.VKontakte;
 
 import java.net.URI;
 
+import static com.vk.api.sdk.objects.users.Fields.*;
 import static org.springframework.social.vkontakte.utils.ObjectUtils.mapOrNull;
 
 /**
@@ -44,17 +44,19 @@ public class VKontakteAdapter implements ApiAdapter<VKontakte> {
 	private final static Log log = LogFactory.getLog(VKontakteAdapter.class);
 
 	private final VkApiClient vkApiClient;
+	private final Lang lang;
 
-	public VKontakteAdapter() {
+	public VKontakteAdapter(Lang lang) {
 		this.vkApiClient = new VkApiClient(HttpTransportClient.getInstance());
+		this.lang = lang;
 	}
 
 	public boolean test(VKontakte vkontakte) {
 		try {
 			vkApiClient.users()
 					   .get(vkontakte.getUserActor())
-					   .fields(Fields.SCREEN_NAME, Fields.PHOTO_200)
-					   .lang(Lang.EN)
+					   .fields(SCREEN_NAME, Fields.PHOTO_200)
+					   .lang(lang)
 					   .execute()
 					   .get(0);
 			return true;
@@ -67,8 +69,8 @@ public class VKontakteAdapter implements ApiAdapter<VKontakte> {
 		try {
             UserFull user = vkApiClient.users()
                                        .get(vkontakte.getUserActor())
-                                       .fields(Fields.PHOTO_200)
-                                       .lang(Lang.EN)
+                                       .fields(PHOTO_200, SCREEN_NAME, FIRST_NAME_NOM, LAST_NAME_NOM)
+                                       .lang(lang)
                                        .execute()
                                        .get(0);
 			values.setProviderUserId(String.valueOf(user.getId()));
@@ -84,18 +86,17 @@ public class VKontakteAdapter implements ApiAdapter<VKontakte> {
 		try {
 			UserFull user = vkApiClient.users()
 									   .get(vkontakte.getUserActor())
-									   .fields(Fields.SCREEN_NAME, Fields.PHOTO_200)
-									   .lang(Lang.EN)
+									   .fields(SCREEN_NAME, FIRST_NAME_NOM, LAST_NAME_NOM, CONTACTS)
+									   .lang(lang)
 									   .execute()
 									   .get(0);
-			return new UserProfileBuilder()
-					.setId(String.valueOf(user.getId()))
-					.setUsername(user.getScreenName())
-					.setFirstName(user.getFirstName())
-					.setLastName(user.getLastName())
-					.setEmail(vkontakte.getEmail())
-					.setName(user.getFirstName() + " " + user.getLastName())
-					.build();
+			return new UserProfileBuilder().setId(String.valueOf(user.getId()))
+										   .setUsername(user.getScreenName())
+										   .setFirstName(user.getFirstName())
+										   .setLastName(user.getLastName())
+										   .setEmail(vkontakte.getEmail())
+										   .setName(user.getFirstName() + " " + user.getLastName())
+										   .build();
 		} catch (ApiException | ClientException e) {
 			log.error("Error while getting current user info.", e);
 			return new UserProfileBuilder().build();

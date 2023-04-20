@@ -15,6 +15,7 @@
  */
 package org.springframework.social.vkontakte.connect;
 
+import com.vk.api.sdk.client.Lang;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
 import org.springframework.social.vkontakte.api.VKontakte;
 import org.springframework.social.vkontakte.api.impl.VKontakteTemplate;
@@ -31,11 +32,13 @@ public class VKontakteServiceProvider extends AbstractOAuth2ServiceProvider<VKon
 
     private final String clientSecret;
     private final Integer clientId;
+    private final Lang lang;
 
-    public VKontakteServiceProvider(String clientId, String clientSecret) {
+    public VKontakteServiceProvider(String clientId, String clientSecret, Lang lang) {
         super(new VKontakteOAuth2Template(clientId, clientSecret));
         this.clientSecret = clientSecret;
         this.clientId = Integer.parseInt(clientId);
+        this.lang = lang;
     }
 
     public VKontakte getApi(String accessToken) {
@@ -53,6 +56,6 @@ public class VKontakteServiceProvider extends AbstractOAuth2ServiceProvider<VKon
             accessToken = accessToken.replaceAll("\\[email=" + email + "\\]", "");
         }
 
-        return new VKontakteTemplate(providerUserId, email, accessToken, clientId, clientSecret);
+        return new VKontakteTemplate(providerUserId, email, accessToken, clientId, clientSecret, lang);
     }
 }

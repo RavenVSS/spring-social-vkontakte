@@ -13,7 +13,7 @@ repositories {
 ext {
     springSocialVersion = '1.1.6.RELEASE'
     vkSdkVersion = '1.0.14'
-    servletApiVersion = '3.1.0'
+    servletApiVersion = '4.0.1'
 }
 
 dependencies {
