@@ -20,6 +20,8 @@ import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.vkontakte.api.VKontakte;
 
+import static com.vk.api.sdk.client.Lang.EN;
+
 /**
  * VKontakte {@link org.springframework.social.connect.ConnectionFactory} implementation.
  *
@@ -29,6 +31,10 @@ public class VKontakteConnectionFactory extends OAuth2ConnectionFactory<VKontakt
 
     public VKontakteConnectionFactory(String clientId, String clientSecret, Lang lang) {
         super("vkontakte", new VKontakteServiceProvider(clientId, clientSecret, lang), new VKontakteAdapter(lang));
+    }
+
+    public VKontakteConnectionFactory(String clientId, String clientSecret) {
+        super("vkontakte", new VKontakteServiceProvider(clientId, clientSecret, EN), new VKontakteAdapter(EN));
     }
 
     @Override

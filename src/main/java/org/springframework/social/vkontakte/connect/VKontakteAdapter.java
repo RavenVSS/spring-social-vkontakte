@@ -32,6 +32,7 @@ import org.springframework.social.vkontakte.api.VKontakte;
 
 import java.net.URI;
 
+import static com.vk.api.sdk.client.Lang.EN;
 import static com.vk.api.sdk.objects.users.Fields.*;
 import static org.springframework.social.vkontakte.utils.ObjectUtils.mapOrNull;
 
@@ -49,6 +50,11 @@ public class VKontakteAdapter implements ApiAdapter<VKontakte> {
 	public VKontakteAdapter(Lang lang) {
 		this.vkApiClient = new VkApiClient(HttpTransportClient.getInstance());
 		this.lang = lang;
+	}
+
+	public VKontakteAdapter() {
+		this.vkApiClient = new VkApiClient(HttpTransportClient.getInstance());
+		this.lang = EN;
 	}
 
 	public boolean test(VKontakte vkontakte) {

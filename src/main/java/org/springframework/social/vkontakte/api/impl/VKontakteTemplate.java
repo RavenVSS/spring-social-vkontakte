@@ -27,6 +27,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.vkontakte.api.VKontakte;
 
+import static com.vk.api.sdk.client.Lang.EN;
+
 /**
  * {@link VKontakte} implementation.
  *
@@ -53,7 +55,7 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
         this.clientId = null;
         this.clientSecret = null;
         this.email = null;
-        this.lang = Lang.EN;
+        this.lang = EN;
         initialize();
     }
 
@@ -70,6 +72,21 @@ public class VKontakteTemplate extends AbstractOAuth2ApiBinding implements VKont
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.lang = lang;
+        initialize();
+    }
+
+    public VKontakteTemplate(Integer providerUserId,
+                             String email,
+                             String accessToken,
+                             Integer clientId,
+                             String clientSecret) {
+        super(accessToken);
+        this.providerUserId = providerUserId;
+        this.email = email;
+        this.accessToken = accessToken;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.lang = EN;
         initialize();
     }
 

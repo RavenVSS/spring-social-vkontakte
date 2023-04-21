@@ -23,6 +23,8 @@ import org.springframework.social.vkontakte.api.impl.VKontakteTemplate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.vk.api.sdk.client.Lang.EN;
+
 /**
  * VKontakte {@link org.springframework.social.ServiceProvider} implementation.
  *
@@ -39,6 +41,13 @@ public class VKontakteServiceProvider extends AbstractOAuth2ServiceProvider<VKon
         this.clientSecret = clientSecret;
         this.clientId = Integer.parseInt(clientId);
         this.lang = lang;
+    }
+
+    public VKontakteServiceProvider(String clientId, String clientSecret) {
+        super(new VKontakteOAuth2Template(clientId, clientSecret));
+        this.clientSecret = clientSecret;
+        this.clientId = Integer.parseInt(clientId);
+        this.lang = EN;
     }
 
     public VKontakte getApi(String accessToken) {
